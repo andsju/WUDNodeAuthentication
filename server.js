@@ -2,6 +2,7 @@
 // ========================================
 import express from "express";
 import session from "express-session";
+import path from 'path';
 
 // local modules
 import { config, SITE_NAME, PORT, SESSION_SECRET, SESSION_MAXAGE } from "./configs.js";
@@ -29,20 +30,7 @@ app.use(
 // middleware - make sure using next as 3rd argument
 app.get('*', (req, res, next) => {
 
-    // // propety views - our own setting to hold number of times user navigates on site
-    // // condition if req.session.views not undefined
-    // if (req.session.views) {
-
-    //     // req.session.views is a number - increase
-    //     req.session.views++;
-        
-    // } else {
-        
-    //     // req.session.views is undefined - set value to 1
-    //     req.session.views = 1;
-    // }
-
-    // oneliner if condition - ternary operator    ? :  ;
+    // oneliner if condition - ternary operator  ? :  ;
     req.session.views ? req.session.views++ : req.session.views = 1;
     
     // show number of times users navigates before session been destroyed
@@ -53,7 +41,10 @@ app.get('*', (req, res, next) => {
 
 
 app.get("/", (req, res) => {
-    res.send(`Hello world ${config.SITE_NAME}`);
+    // res.send(`Hello world ${config.SITE_NAME}`);
+
+    // send a file using express
+    res.sendFile(path.resolve('./public/index.html'));
 });
 
 
