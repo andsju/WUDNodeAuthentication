@@ -20,10 +20,10 @@ ___
 ## Comments...
 
 ### Server event order
-- dependencies
-- middleware | sessions, handle posts
-- routes | endpoints: api response json, render page using template engine
-- static files
-- 404 not found - custom page | info
-- 500 server error
-- listen on server requests
+1. dependencies
+2. middleware | sessions, handle posts
+3. routes | endpoints: api response json, render page using template engine
+4. static files
+5. 404 not found - custom page | info
+6. 500 server error
+7. listen on server requests
