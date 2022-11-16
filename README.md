@@ -1,18 +1,54 @@
 # WUDNodeAuthentication
 Tutorial - authenticataion sessionbased application using Nodejs
 
-### Branch 1-express
+**How to setup application**
 
-Steps
-- initial git repo, npm setup 
-- express, dotenv
-
-Use .env file to set application secrets | variables. 
-
-**How to run application**
 1. Clone git repo branch
 2. Install dependencies `npm i`
-3. Make a copy of `.env-example` and name it `.env`
-4. Set application values in file `.env`
-5. Start server `node server` 
-6. Open a browser and visit localhost:3000
+3. Copy file `.env-example` to file named `.env`
+4. Use `.env` file to set application secrets | variables. 
+   
+**How to run application**
+
+1. Start server `node server` 
+2. Open a browser and visit localhost:3000
+
+___
+
+## Comments...
+
+### Server event order
+1. dependencies
+2. middleware | sessions, handle posts
+3. routes | endpoints: api response json, render page using template engine
+4. static files
+5. 404 not found - custom page | info
+6. 500 server error
+7. listen on server requests
+
+### Template engine
+
+EJS - Embedded JavaScript templating
+
+Use Visual Studio Code extension EJS Language support 
+
+https://ejs.co/
+
+*folder structure*
+
+- views
+  - partials
+    - header.ejs
+    - footer.js
+    - nav.ejs 
+- index.ejs
+- about.ejs
+- user.ejs
+- ...
+
+
+### Routes
+
+- routes
+  - route-start.js
+  - route-about.js

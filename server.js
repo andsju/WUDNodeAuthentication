@@ -1,10 +1,11 @@
 // dependencies - import => package.json "type": "module",
 // ========================================
-import express from 'express';
-
+import express from "express";
+import session from "express-session";
 
 // local modules
-import { config, SITE_NAME, PORT } from './configs.js';
+import { config, SITE_NAME, PORT, SESSION_SECRET, SESSION_MAXAGE } from "./configs.js";
+import routeStart from './routes/route-start.js';
 
 
 // express app environment
@@ -12,10 +13,71 @@ import { config, SITE_NAME, PORT } from './configs.js';
 const app = express();
 
 
+// express template engine
+// ========================================
+app.set("view engine", "ejs");
+
+
+// middleware
+// ========================================
+
+
+// sessions
+// ========================================
+app.use(
+    session({
+        secret: SESSION_SECRET,
+        resave: false,
+        saveUninitialized: true,
+        cookie: { maxAge: SESSION_MAXAGE },
+    })
+);
+
+
 // routes
 // ========================================
-app.get('/', (req, res) => {
-    res.send(`Hello world ${config.SITE_NAME}`);
+
+// check sessions
+// make sure using next as 3rd argument
+app.get('*', (req, res, next) => {
+
+    // oneliner if condition - ternary operator  ? :  ;
+    req.session.views ? req.session.views++ : req.session.views = 1;
+    
+    // show number of times users navigates before session been destroyed
+    console.log("req.session.views", req.session.views);
+
+    next();
+});
+
+// use local routes ...
+app.use('/', routeStart);
+app.use('/start', routeStart);
+app.use('/home', routeStart);
+
+
+// static files | folders
+// ========================================
+app.use(express.static("./public"));
+
+
+// 404 not found
+// ========================================
+app.use((req, res, next) => {
+    res.status(404).send("Sry - nothing to display");
+    next();
+});
+
+
+// 500 server error
+// ========================================
+app.use((err, req, res, next) => {
+    
+    // log server error server-side
+    console.log("Error", err); 
+
+    res.status(500).send("Server error - please return later");
+    next();
 });
 
 
