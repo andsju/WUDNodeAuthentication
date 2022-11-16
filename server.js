@@ -13,6 +13,11 @@ import { config, SITE_NAME, PORT, SESSION_SECRET, SESSION_MAXAGE } from "./confi
 const app = express();
 
 
+// express template engine
+// ========================================
+app.set("view engine", "ejs");
+
+
 // middleware
 // ========================================
 
@@ -44,6 +49,16 @@ app.get('*', (req, res, next) => {
 
     next();
 });
+
+
+// render page using ejs
+app.get("/", (req, res) => {
+    
+    // use ejs method render, takes 2 params
+    // param 2 - pass object
+    res.render("index", {site: SITE_NAME});
+});
+
 
 
 // static files | folders

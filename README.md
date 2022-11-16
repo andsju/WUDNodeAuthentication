@@ -27,3 +27,23 @@ ___
 5. 404 not found - custom page | info
 6. 500 server error
 7. listen on server requests
+
+### Template engine
+
+Embedded JavaScript templating | Handlebars
+
+Use Visual Studio Code extension EJS Language support 
+
+https://ejs.co/
+
+*folder structure*
+
+- views
+  - partials
+    - header.ejs
+    - footer.js
+    - nav.ejs 
+- index.ejs
+- about.ejs
+- user.ejs
+- ...
