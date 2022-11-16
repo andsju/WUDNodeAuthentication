@@ -2,10 +2,11 @@
 // ========================================
 import express from "express";
 import session from "express-session";
-import path from 'path';
+// import path from 'path';
 
 // local modules
 import { config, SITE_NAME, PORT, SESSION_SECRET, SESSION_MAXAGE } from "./configs.js";
+
 
 // express app environment
 // ========================================
@@ -41,18 +42,8 @@ app.get('*', (req, res, next) => {
     // show number of times users navigates before session been destroyed
     console.log("req.session.views", req.session.views);
 
-    
-
-    nex();
+    next();
 });
-
-
-// app.get("/", (req, res) => {
-//     // res.send(`Hello world ${config.SITE_NAME}`);
-
-//     // send a file using express
-//     res.sendFile(path.resolve('./public/index.html'));
-// });
 
 
 // static files | folders
