@@ -11,6 +11,11 @@ import { config, SITE_NAME, PORT, SESSION_SECRET, SESSION_MAXAGE } from "./confi
 // ========================================
 const app = express();
 
+
+// middleware
+// ========================================
+
+
 // sessions
 // ========================================
 app.use(
@@ -27,7 +32,7 @@ app.use(
 // ========================================
 
 // check sessions
-// middleware - make sure using next as 3rd argument
+// make sure using next as 3rd argument
 app.get('*', (req, res, next) => {
 
     // oneliner if condition - ternary operator  ? :  ;
@@ -36,15 +41,42 @@ app.get('*', (req, res, next) => {
     // show number of times users navigates before session been destroyed
     console.log("req.session.views", req.session.views);
 
+    
+
+    nex();
+});
+
+
+// app.get("/", (req, res) => {
+//     // res.send(`Hello world ${config.SITE_NAME}`);
+
+//     // send a file using express
+//     res.sendFile(path.resolve('./public/index.html'));
+// });
+
+
+// static files | folders
+// ========================================
+app.use(express.static("./public"));
+
+
+// 404 not found
+// ========================================
+app.use((req, res, next) => {
+    res.status(404).send("Sry - nothing to display");
     next();
 });
 
 
-app.get("/", (req, res) => {
-    // res.send(`Hello world ${config.SITE_NAME}`);
+// 500 server error
+// ========================================
+app.use((err, req, res, next) => {
+    
+    // log server error server-side
+    console.log("Error", err); 
 
-    // send a file using express
-    res.sendFile(path.resolve('./public/index.html'));
+    res.status(500).send("Server error - please return later");
+    next();
 });
 
 
