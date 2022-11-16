@@ -2,10 +2,10 @@
 // ========================================
 import express from "express";
 import session from "express-session";
-// import path from 'path';
 
 // local modules
 import { config, SITE_NAME, PORT, SESSION_SECRET, SESSION_MAXAGE } from "./configs.js";
+import routeStart from './routes/route-start.js';
 
 
 // express app environment
@@ -50,15 +50,10 @@ app.get('*', (req, res, next) => {
     next();
 });
 
-
-// render page using ejs
-app.get("/", (req, res) => {
-    
-    // use ejs method render, takes 2 params
-    // param 2 - pass object
-    res.render("index", {site: SITE_NAME});
-});
-
+// use local routes ...
+app.use('/', routeStart);
+app.use('/start', routeStart);
+app.use('/home', routeStart);
 
 
 // static files | folders
