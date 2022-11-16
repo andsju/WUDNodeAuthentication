@@ -47,3 +47,10 @@ https://ejs.co/
 - about.ejs
 - user.ejs
 - ...
+
+
+### Routes
+
+- routes
+  - route-start.js
+  - route-about.js
