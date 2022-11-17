@@ -7,7 +7,7 @@ router.get("/", (req, res) => {
     
     // use ejs method render, takes 2 params
     // param 2 - pass object
-    res.render("index", {site: SITE_NAME});
+    res.render("index", {site: SITE_NAME });
 });
 
 export default router;
