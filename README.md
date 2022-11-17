@@ -69,3 +69,10 @@ https://ejs.co/
   - register.ejs
   - users.ejs
   - ...
+
+### MongoDB
+
+Set MongoDB URL and MongoDB database name (collection) in `.env file`
+- MONGODB_URL="mongodb+srv://...?retryWrites=true&w=majority"
+- MONGODB_NAME=""
+

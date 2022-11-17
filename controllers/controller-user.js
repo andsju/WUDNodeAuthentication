@@ -1,17 +1,28 @@
-// importera database
+// import database
+import connectDatabase from '../configurations/mongodb.js';
+let db = await connectDatabase();
 
 // models | Schemas
-import { UserSchema } from '../models/User.js';
+import { UserSchema } from '../models/UserSchema.js';
 
-// check if obj passes schema validation
 
-let obj = {firstName: "F", lastName: "Hedenhös"};
+async function listUsers() {
+    let users = await db.collection("users").find({}).toArray();
 
-// https://www.npmjs.com/package/validate
-// .validate() function returns an array of validation errors.
-const errors = UserSchema.validate(obj);
-
-// check: if errors skip database call...
-if (errors.length > 0) {
-
+    return users;
 }
+
+async function addUser() {
+
+    // check if obj passes schema validation
+    // https://www.npmjs.com/package/validate
+    // .validate() function returns an array of validation errors.
+    let obj = {firstName: "Flisa", lastName: "Hedenhös"};
+    const errors = UserSchema.validate(obj);
+
+    // if no errors - save to database...
+}
+
+
+
+export { listUsers };
