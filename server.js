@@ -6,6 +6,7 @@ import session from "express-session";
 // local modules
 import { config, SITE_NAME, PORT, SESSION_SECRET, SESSION_MAXAGE } from "./configs.js";
 import routeStart from './routes/route-start.js';
+import routeUser from './routes/route-user.js';
 
 
 // express app environment
@@ -54,6 +55,8 @@ app.get('*', (req, res, next) => {
 app.use('/', routeStart);
 app.use('/start', routeStart);
 app.use('/home', routeStart);
+
+app.use('/user', routeUser);
 
 
 // static files | folders

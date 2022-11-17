@@ -52,3 +52,27 @@ https://ejs.co/
 - routes
   - route-start.js
   - route-about.js
+
+### MVC - Model View Controller
+
+*folder structure*
+
+- controllers
+  - controller-user.js
+- models
+  <!-- model-user.js ... if class | schema - User.js  -->
+  - User.js
+  - UserSchema.js
+- views
+  - user.ejs
+  - login.ejs
+  - register.ejs
+  - users.ejs
+  - ...
+
+### MongoDB
+
+Set MongoDB URL and MongoDB database name (collection) in `.env file`
+- MONGODB_URL="mongodb+srv://...?retryWrites=true&w=majority"
+- MONGODB_NAME=""
+
