@@ -35,6 +35,15 @@ app.use(
 );
 
 
+
+// handle method post - request body as json 
+// if app uses upload files - route actions before this step...
+// ========================================
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+
+
 // routes
 // ========================================
 
