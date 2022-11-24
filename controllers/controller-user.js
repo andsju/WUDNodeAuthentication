@@ -32,4 +32,27 @@ async function addUser(obj) {
     return await db.collection("users").insertOne(obj);
 }
 
+async function loginUser(obj) {
+
+    // check if users exists
+    const user = await getUsername(obj.username);
+
+    if (!user) {
+        return {error: "Login misslyckades"};
+    }
+
+    // compare hashed obj.password | hashed password in database
+    const matchPassword = bcrypt.compareSync(obj.password, user.password);
+
+    if (!matchPassword) {
+        return {error: "Login misslyckades"};
+    } else {
+        return {result: "success", message: "Password match", user: user}
+    }
+}
+
+async function getUsername(username) {
+    return await db.collection("users").findOne({username: username});
+};
+
 export { listUsers, addUser };

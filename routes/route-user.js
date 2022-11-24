@@ -12,6 +12,11 @@ router.get("/register", (req, res) => {
     res.render("register", { site: SITE_NAME });
 });
 
+router.get("/login", (req, res) => {
+    res.render("login", { site: SITE_NAME });
+});
+
+
 router.post("/register", (req, res) => {
 
     // formulärdata finns i req 
@@ -39,6 +44,19 @@ router.post("/register", (req, res) => {
             res.json(reply);
         });
 });
+
+router.post("/login", (req, res) => {
+    console.log("login...", req.body);
+
+      // prepare obj reply
+      let reply = { result: "", message: "" };
+
+    // contoller method...
+    
+
+});
+
+
 
 // listUsers().then(data => {
 //     console.log("data", data);
