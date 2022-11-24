@@ -5,6 +5,11 @@ let db = await connectDatabase();
 // models | Schemas
 import { UserSchema } from '../models/UserSchema.js';
 
+// ...hash password library
+import bcrypt from "bcrypt";
+
+const saltRounds = 10;
+
 
 async function listUsers() {
     let users = await db.collection("users").find({}).toArray();
@@ -28,8 +33,28 @@ async function addUser(obj) {
         return {error: errors[0].message};
     }
 
-    // if no errors - save to database, return result
-    return await db.collection("users").insertOne(obj);
+    // check if user exists - if true - return message
+    const user = await getUsername(obj.username);
+
+    if (!user) {
+
+        // hash password using bcrypt
+        const hash = bcrypt.hashSync(obj.password, saltRounds);
+        console.log("password", obj.password, "hash", hash);
+
+        // use hashed password 
+        obj.password = hash;
+
+        // if no errors - save to database, return result
+        return await db.collection("users").insertOne(obj);
+
+    } else {
+        return {error: "Användaren finns redan"};
+    }
+}
+
+async function getUsername(username) {
+    return await db.collection("users").findOne({username: username});
 }
 
 export { listUsers, addUser };
