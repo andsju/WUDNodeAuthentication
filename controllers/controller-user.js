@@ -4,7 +4,9 @@ let db = await connectDatabase();
 
 // models | Schemas
 import { UserSchema } from '../models/UserSchema.js';
+import bcrypt from 'bcrypt';
 
+const saltRounds = 10;
 
 async function listUsers() {
     let users = await db.collection("users").find({}).toArray();
@@ -28,8 +30,24 @@ async function addUser(obj) {
         return {error: errors[0].message};
     }
 
-    // if no errors - save to database, return result
-    return await db.collection("users").insertOne(obj);
+    const user = await getUsername(obj.username);
+    console.log("user...?", user);
+
+    if (!user) {
+
+        // hash
+        const hash = bcrypt.hashSync(obj.password, saltRounds);
+        obj.password = hash;
+
+        // if no errors - save to database, return result    
+        return await db.collection("users").insertOne(obj);
+
+    } else {
+        return {error: "............"};
+    }
+
+
+
 }
 
 async function loginUser(obj) {
@@ -38,14 +56,14 @@ async function loginUser(obj) {
     const user = await getUsername(obj.username);
 
     if (!user) {
-        return {error: "Login misslyckades"};
+        return {error: "Login fail"};
     }
 
     // compare hashed obj.password | hashed password in database
     const matchPassword = bcrypt.compareSync(obj.password, user.password);
 
     if (!matchPassword) {
-        return {error: "Login misslyckades"};
+        return {error: "Login fail"};
     } else {
         return {result: "success", message: "Password match", user: user}
     }
@@ -55,4 +73,4 @@ async function getUsername(username) {
     return await db.collection("users").findOne({username: username});
 };
 
-export { listUsers, addUser };
+export { listUsers, addUser, loginUser };

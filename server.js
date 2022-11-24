@@ -57,6 +57,9 @@ app.get('*', (req, res, next) => {
     // show number of times users navigates before session been destroyed
     console.log("req.session.views", req.session.views);
 
+    // authenticated user...should be a property "username" i req.session
+    console.log(req.session);
+
     next();
 });
 
