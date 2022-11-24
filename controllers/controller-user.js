@@ -22,7 +22,6 @@ async function addUser(obj) {
 
     // console.log("errors", errors);
     // big no-no to store password in plain text....
-    // todo - use bcrypt to hash password  
     // https://www.npmjs.com/package/bcrypt
 
     // return
@@ -31,7 +30,6 @@ async function addUser(obj) {
     }
 
     const user = await getUsername(obj.username);
-    console.log("user...?", user);
 
     if (!user) {
 
@@ -45,9 +43,6 @@ async function addUser(obj) {
     } else {
         return {error: "............"};
     }
-
-
-
 }
 
 async function loginUser(obj) {

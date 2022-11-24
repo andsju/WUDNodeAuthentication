@@ -36,6 +36,7 @@ app.use(
 
 
 
+
 // handle method post - request body as json 
 // if app uses upload files - route actions before this step...
 // ========================================
@@ -58,7 +59,7 @@ app.get('*', (req, res, next) => {
     console.log("req.session.views", req.session.views);
 
     // authenticated user...should be a property "username" i req.session
-    console.log(req.session);
+    console.log(req.session, req.session.id);
 
     next();
 });
@@ -67,8 +68,19 @@ app.get('*', (req, res, next) => {
 app.use('/', routeStart);
 app.use('/start', routeStart);
 app.use('/home', routeStart);
-
 app.use('/user', routeUser);
+
+
+
+// pass server-side content to render engine - res.locals, app.locals, object as 2 arg res.render(,{})
+// apples, pears, plums, berries
+
+app.locals.berries = "Strawberry"
+
+app.get('/apples', (req, res) => {
+    res.locals.pears = "Clara Frijs"; 
+    res.render("apples", {site: SITE_NAME, apples: "Ingrid Marie", id: req.session.id })
+});
 
 
 // static files | folders

@@ -4,7 +4,6 @@ const router = express.Router();
 
 import { listUsers, addUser, loginUser } from "../controllers/controller-user.js";
 
-
 router.get("/", (req, res) => {
     res.render("user", { site: SITE_NAME, username: req.session.username });
 });
@@ -17,14 +16,15 @@ router.get("/login", (req, res) => {
     res.render("login", { site: SITE_NAME, username: req.session.username });
 });
 
+router.get("/logout", (req, res) => {
+
+    // session destroy
+    req.session.destroy();
+    res.render("index", { site: SITE_NAME, username: "" });
+});
 
 router.post("/register", (req, res) => {
 
-    // formulärdata finns i req 
-    // - se till att express hanterar formulär data som json
-    console.log("req.body", req.body);
-
-    // prepare obj reply
     let reply = { result: "", message: "" };
 
     addUser(req.body)
@@ -35,7 +35,7 @@ router.post("/register", (req, res) => {
                 reply.message = data.error;
             } else {
                 reply.result = "success";
-                reply.message = "användare sparades till databasen";
+                reply.message = "Användare sparad";
             }
         })
         .catch((error) => {
@@ -47,40 +47,27 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-    console.log("login...", req.body);
 
-      // prepare obj reply
-      let reply = { result: "", message: "" };
+    let reply = { result: "", message: "" };
 
-    // contoller method...
     loginUser(req.body).then((data) => {
-        console.log("data", data);
 
         if (data.error !== undefined) {
             reply.result = "fail";
             reply.message = data.error;
         } else {
             reply.result = "success";
-            reply.message = "Du har loggat in";
+            reply.message = "Du har loggat in - <a href='/'>startsida</a>";
             
             // session
             req.session.username = data.user.username;
         }
-
 
     }).catch(error => {
         console.log("error loginUser method", error);
     }).finally(() => {
         res.json(reply);
     });
-
 });
-
-
-
-// listUsers().then(data => {
-//     console.log("data", data);
-//     res.json(data);
-// });
 
 export default router;

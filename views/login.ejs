@@ -49,7 +49,7 @@
                     .then(response => response.json())
                     .then((data) => {
                         console.log("data", data);
-                        document.querySelector("span").textContent = data.message;
+                        document.querySelector("span").innerHTML = data.message;
                     });
             });
 
